@@ -5,7 +5,7 @@ namespace ProductApi.Model
     public class Connect
     {
         public MySqlConnection Connection;
-        public string MysqlConnectionString;
+        private string ConnectionString;
 
 
         private string Host;
@@ -19,6 +19,8 @@ namespace ProductApi.Model
             Database = "shop";
             User= "root";
             Password= "";
+            ConnectionString = "SERVER=" + Host + ";DATABASE=" + Database + ";UID=" + User + ";PASSWORD=" + Password + ";SslMode=None";
+            Connection = new MySqlConnection(ConnectionString);
         }
     }
 }
