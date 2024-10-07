@@ -52,11 +52,21 @@ namespace ProductApi.Controllers
                 Price=product.Price,
                 CreatedTime=DateTime.Now
             };
-            string sql = $"INSERT INTO `products`(`id`, `Name`, `Price`, `CreatedTime`) VALUES ('{result.Id}','{result.Name}','{result.Price}','{result.CreatedTime}')";
+            string sql = $"INSERT INTO `products`(`id`, `Name`, `Price`, `CreatedTime`) VALUES ('{result.Id}','{result.Name}','{result.Price}','{result.CreatedTime.ToString("yyyy-mm-dd hh:mm:ss")}')";
             conn.Connection.Open();
             MySqlCommand cmd = new MySqlCommand(sql, conn.Connection);
             conn.Connection.Close() ;
             return StatusCode(281,result);
+        }
+        [HttpPost]
+        public ActionResult<Product> Post(Guid id, UpdateProductDto product)
+        {
+            string sql = $"UPDATE `products` SET `Name`='{product.Name}',`Price`='{product.Price}', WHERE `Id`={id}";
+            conn.Connection.Open();
+            MySqlCommand cmd=new MySqlCommand(sql, conn.Connection);
+            cmd.ExecuteNonQuery();
+            conn.Connection.Close();
+            return Ok();
         }
     }
 }
